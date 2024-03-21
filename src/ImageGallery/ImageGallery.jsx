@@ -1,19 +1,21 @@
-import PropTypes from "prop-types";
-import ImageCard from "../ImageCard/ImageCard";
+import PropTypes from 'prop-types';
+import ImageCard from '../ImageCard/ImageCard';
 
 const ImageGallery = ({ images }) => {
-
   const hasImages = images.length > 0;
 
   return (
-   
     hasImages && (
       <ul>
-        {images.map((image, index) => (
-          <li key={index}>
-            <div>
-            <ImageCard imageUrl={image.urls.small} altText={image.description} />
-            </div>
+        {images.map(image => (
+          <li key={image.id}>
+            <ImageCard
+              imageUrl={image.urls.small}
+              altText={image.description}
+              author={image.author}
+              likes={image.likes}
+              description={image.description}
+            />
           </li>
         ))}
       </ul>
@@ -21,16 +23,22 @@ const ImageGallery = ({ images }) => {
   );
 };
 
-
 ImageGallery.propTypes = {
-    images: PropTypes.arrayOf(
-      PropTypes.shape({
-        urls: PropTypes.shape({
-          small: PropTypes.string.isRequired
-        }),
-        description: PropTypes.string.isRequired
-      })
-    ).isRequired,
-  };
-  
+  images: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      urls: PropTypes.shape({
+        small: PropTypes.string.isRequired,
+        regular: PropTypes.string.isRequired
+      }).isRequired,
+      author: PropTypes.shape({
+        name: PropTypes.string.isRequired,
+        username: PropTypes.string.isRequired,
+      }),
+      likes: PropTypes.number.isRequired,
+      description: PropTypes.string
+    })
+  ).isRequired
+};
+
 export default ImageGallery;

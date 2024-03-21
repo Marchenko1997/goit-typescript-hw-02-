@@ -1,5 +1,5 @@
-import PropTypes from "prop-types";
-import toast, { Toaster } from "react-hot-toast";
+import PropTypes from 'prop-types';
+import toast, { Toaster } from 'react-hot-toast';
 
 const SearchBar = ({ onSubmit }) => {
   const handleSubmit = (evt) => {
@@ -8,7 +8,7 @@ const SearchBar = ({ onSubmit }) => {
     const topic = form.elements.topic.value.trim();
 
     if (!topic) {
-      toast.error("Please enter a search term!");
+      toast.error('Please enter a search term!');
       return;
     }
 
@@ -34,7 +34,7 @@ const SearchBar = ({ onSubmit }) => {
 };
 
 SearchBar.propTypes = {
-  onSubmit: PropTypes.func.isRequired,
+  onSubmit: PropTypes.func.isRequired
 };
 
 export default SearchBar;
