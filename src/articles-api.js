@@ -1,7 +1,7 @@
 const accessKey = 'e1Aww9Xz-HYCWbJlnhbo9mQqNyKMxYiS2j19EiIHlz0';
 const baseUrl = 'https://api.unsplash.com/';
 
-export async function fetchImages(topic, width = 300, height = 300) {
+export async function fetchImages(topic, width = 200, height = 200) {
   try {
     const response = await fetch(`${baseUrl}photos?client_id=${accessKey}&query=${topic}&w=${width}&h=${height}`);
     const data = await response.json();
@@ -15,8 +15,6 @@ export async function fetchImages(topic, width = 300, height = 300) {
       author: {
         name: image.user.name,
         username: image.user.username,
-        profile: image.user.links.html,
-        portfolio: image.user.portfolio_url
       },
       likes: image.likes,
       description: image.alt_description || image.description
