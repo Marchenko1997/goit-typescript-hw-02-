@@ -1,3 +1,4 @@
+// ImageCard.jsx
 import PropTypes from 'prop-types';
 
 const ImageCard = ({ imageUrl, altText, author, likes, description }) => {
@@ -5,9 +6,9 @@ const ImageCard = ({ imageUrl, altText, author, likes, description }) => {
     <div>
       <img src={imageUrl} alt={altText} />
       <div>
-        <p>Author: {author.name} ({author.username})</p>
-        <p>Likes: {likes}</p>
-        <p>Description: {description}</p>
+        <p>Author: {author.name} ({author.username})</p> 
+        <p>Likes: {likes}</p> 
+        <p>Description: {description}</p> 
       </div>
     </div>
   );

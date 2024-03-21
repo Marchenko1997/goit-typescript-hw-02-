@@ -1,3 +1,4 @@
+// ImageGallery.jsx
 import PropTypes from 'prop-types';
 import ImageCard from '../ImageCard/ImageCard';
 
@@ -12,9 +13,9 @@ const ImageGallery = ({ images }) => {
             <ImageCard
               imageUrl={image.urls.small}
               altText={image.description}
-              author={image.author}
+              author={image.author} 
               likes={image.likes}
-              description={image.description}
+              description={image.description} 
             />
           </li>
         ))}

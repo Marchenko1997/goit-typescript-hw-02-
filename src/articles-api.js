@@ -1,12 +1,24 @@
+import axios from 'axios';
+
 const accessKey = 'e1Aww9Xz-HYCWbJlnhbo9mQqNyKMxYiS2j19EiIHlz0';
 const baseUrl = 'https://api.unsplash.com/';
 
 export async function fetchImages(topic, width = 200, height = 200) {
   try {
-    const response = await fetch(`${baseUrl}photos?client_id=${accessKey}&query=${topic}&w=${width}&h=${height}`);
-    const data = await response.json();
+    const response = await axios.get(`${baseUrl}search/photos`, {
+      params: {
+        client_id: accessKey,
+        query: topic,
+        page: 1,
+        per_page: 10,
+        w: width,
+        h: height
+      }
+    });
 
-    const modifiedData = data.map(image => ({
+    const data = response.data;
+
+    const modifiedData = data.results.map(image => ({
       id: image.id,
       urls: {
         small: image.urls.small,
