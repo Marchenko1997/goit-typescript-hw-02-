@@ -21,6 +21,7 @@ function App() {
       setHasMoreImages(true); 
       if (fetchedImages.length === 0) {
         setHasMoreImages(false); 
+        setError(new Error('No results were found for your request!'));
       }
     } catch (error) {
       setError(error);
@@ -35,6 +36,7 @@ function App() {
       setImages(prevImages => [...prevImages, ...newImages]);
       if (newImages.length === 0) {
         setHasMoreImages(false); 
+        
       }
     } catch (error) {
       console.error('Error loading more images:', error);
