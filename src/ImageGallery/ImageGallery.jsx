@@ -1,4 +1,3 @@
-// ImageGallery.jsx
 import PropTypes from 'prop-types';
 import ImageCard from '../ImageCard/ImageCard';
 
@@ -7,9 +6,9 @@ const ImageGallery = ({ images }) => {
 
   return (
     hasImages && (
-      <ul>
-        {images.map(image => (
-          <li key={image.id}>
+        <ul>
+        {images.map((image, index) => (
+          <li key={index}>
             <ImageCard
               imageUrl={image.urls.small}
               altText={image.description}
@@ -20,6 +19,7 @@ const ImageGallery = ({ images }) => {
           </li>
         ))}
       </ul>
+      
     )
   );
 };
