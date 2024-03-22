@@ -1,13 +1,9 @@
-import ImageGallery from './ImageGallery/ImageGallery';
-import SearchBar from './SearchBar/SearchBar';
 import { useState } from "react";
-import { fetchImages } from './articles-api';
-import Loader  from './Loader/Loader';
-import {fetchMoreImages} from './articles-api';
+import SearchBar from './SearchBar/SearchBar';
+import ImageGallery from './ImageGallery/ImageGallery';
+import Loader from './Loader/Loader';
+import { fetchImages, fetchMoreImages } from './articles-api';
 import LoadMoreBtn from './LoadMoreBtn/LoadMoreBtn';
-
-
-
 
 function App() {
   const [images, setImages] = useState([]);
@@ -20,24 +16,27 @@ function App() {
       setImages([]);
       setError(null);
       setLoading(true);
-      setHasMoreImages (true);
       const fetchedImages = await fetchImages(topic);
       setImages(fetchedImages);
+      setHasMoreImages(true); 
+      if (fetchedImages.length === 0) {
+        setHasMoreImages(false); 
+      }
     } catch (error) {
       setError(error);
-    }finally {
+    } finally {
       setLoading(false);
     }
   };
 
   const handleLoadMore = async (topic) => {
-    try{
+    try {
       const newImages = await fetchMoreImages(topic);
       setImages(prevImages => [...prevImages, ...newImages]);
-      if(newImages.length === 0) {
-        setHasMoreImages(false);
+      if (newImages.length === 0) {
+        setHasMoreImages(false); 
       }
-    } catch (error){
+    } catch (error) {
       console.error('Error loading more images:', error);
     }
   }
@@ -49,7 +48,6 @@ function App() {
       {error && <p>Error: {error.message}</p>}
       <ImageGallery images={images} />
       <LoadMoreBtn onLoadMore={handleLoadMore} hasMoreImages={hasMoreImages} />
-
     </div>
   );
 }
