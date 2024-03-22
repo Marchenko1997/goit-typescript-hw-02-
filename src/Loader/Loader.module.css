@@ -1,0 +1,7 @@
+.loaderwrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Высота на весь экран, можно настроить под свои нужды */
+  }
+  
