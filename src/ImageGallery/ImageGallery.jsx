@@ -1,25 +1,27 @@
+// ImageGallery.jsx
+
 import PropTypes from 'prop-types';
 import ImageCard from '../ImageCard/ImageCard';
 
-const ImageGallery = ({ images }) => {
+const ImageGallery = ({ images, openModal }) => {
   const hasImages = images.length > 0;
 
   return (
     hasImages && (
-        <ul>
+      <ul>
         {images.map((image, index) => (
           <li key={index}>
             <ImageCard
               imageUrl={image.urls.small}
               altText={image.description}
-              author={image.author} 
+              author={image.author}
               likes={image.likes}
-              description={image.description} 
+              description={image.description}
+              onClick={() => openModal(image.urls.regular)} // Вызываем openModal при клике на изображение
             />
           </li>
         ))}
       </ul>
-      
     )
   );
 };
@@ -39,7 +41,8 @@ ImageGallery.propTypes = {
       likes: PropTypes.number.isRequired,
       description: PropTypes.string
     })
-  ).isRequired
+  ).isRequired,
+  openModal: PropTypes.func.isRequired // Проп валидация для openModal
 };
 
 export default ImageGallery;

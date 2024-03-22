@@ -1,9 +1,9 @@
 // ImageCard.jsx
 import PropTypes from 'prop-types';
 
-const ImageCard = ({ imageUrl, altText, author, likes, description }) => {
+const ImageCard = ({ imageUrl, altText, author, likes, description, onClick }) => {
   return (
-    <div>
+    <div onClick={onClick}>
       <img src={imageUrl} alt={altText} />
       <div>
         <p>Author: {author.name} ({author.username})</p> 
@@ -22,7 +22,8 @@ ImageCard.propTypes = {
     username: PropTypes.string.isRequired,
   }).isRequired,
   likes: PropTypes.number.isRequired,
-  description: PropTypes.string
+  description: PropTypes.string,
+  onClick: PropTypes.func.isRequired
 };
 
 export default ImageCard;

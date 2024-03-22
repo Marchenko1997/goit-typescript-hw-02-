@@ -40,6 +40,7 @@ export async function fetchImages(topic, width = 200, height = 200) {
 }
 export async function fetchMoreImages(topic, page = 1, perPage = 10, width = 200, height = 200) {
     try {
+      const randomNumber = Math.random(); 
       const response = await axios.get(`${baseUrl}search/photos`, {
         params: {
           client_id: accessKey,
@@ -47,7 +48,8 @@ export async function fetchMoreImages(topic, page = 1, perPage = 10, width = 200
           page: page,
           per_page: perPage,
           w: width,
-          h: height
+          h: height,
+          random: randomNumber 
         }
       });
   
@@ -73,3 +75,4 @@ export async function fetchMoreImages(topic, page = 1, perPage = 10, width = 200
       throw error;
     }
   }
+  

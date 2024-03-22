@@ -4,12 +4,16 @@ import ImageGallery from './ImageGallery/ImageGallery';
 import Loader from './Loader/Loader';
 import { fetchImages, fetchMoreImages } from './articles-api';
 import LoadMoreBtn from './LoadMoreBtn/LoadMoreBtn';
+import ImageModal from "./ImageModal/ImageModal";
 
 function App() {
   const [images, setImages] = useState([]);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
   const [hasMoreImages, setHasMoreImages] = useState(false);
+  const [selectedImageUrl, setSelectedImageUrl] = useState('');
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
 
   const handleSearch = async (topic) => {
     try {
@@ -43,12 +47,23 @@ function App() {
     }
   }
 
+  const openModal = (imageUrl) => {
+    setSelectedImageUrl(imageUrl);
+    setIsModalOpen(true);
+
+  }
+
+  const closeModal =()=> {
+    setIsModalOpen(false);
+  }
+
   return (
     <div>
       <SearchBar onSubmit={handleSearch} />
       {loading && <Loader />}
       {error && <p>Error: {error.message}</p>}
-      <ImageGallery images={images} />
+      <ImageGallery images={images} openModal={openModal} />
+      <ImageModal isOpen={isModalOpen} onRequestClose={closeModal} imageUrl={selectedImageUrl} />
       <LoadMoreBtn onLoadMore={handleLoadMore} hasMoreImages={hasMoreImages} />
     </div>
   );
