@@ -1,9 +1,9 @@
-import { useState } from "react";
-import SearchBar from './SearchBar/SearchBar';
-import ImageGallery from './ImageGallery/ImageGallery';
-import Loader from './Loader/Loader';
-import { fetchImages, fetchMoreImages } from './articles-api';
-import LoadMoreBtn from './LoadMoreBtn/LoadMoreBtn';
+import { useState, useEffect } from "react";
+import SearchBar from "./SearchBar/SearchBar";
+import ImageGallery from "./ImageGallery/ImageGallery";
+import Loader from "./Loader/Loader";
+import { fetchImages } from "./articles-api";
+import LoadMoreBtn from "./LoadMoreBtn/LoadMoreBtn";
 import ImageModal from "./ImageModal/ImageModal";
 
 function App() {
@@ -11,22 +11,28 @@ function App() {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
   const [hasMoreImages, setHasMoreImages] = useState(false);
-  const [selectedImageUrl, setSelectedImageUrl] = useState('');
+  const [selectedImageUrl, setSelectedImageUrl] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [query, setQuery] = useState("");
+  const [page, setPage] = useState(1);
 
+  useEffect(() => {
+    if (query) {
+      fetchImagesData(query, page);
+    }
+  }, [query, page]);
 
-  const handleSearch = async (topic) => {
+  const fetchImagesData = async (topic, pageNumber) => {
     try {
-      setImages([]);
-      setError(null);
       setLoading(true);
-      const fetchedImages = await fetchImages(topic);
-      setImages(fetchedImages);
-      setHasMoreImages(true); 
-      if (fetchedImages.length === 0) {
-        setHasMoreImages(false); 
-        setError(new Error('No results were found for your request!'));
+      const fetchedImages = await fetchImages(topic, pageNumber);
+      if (pageNumber === 1) {
+        setImages(fetchedImages);
+      } else {
+        setImages((prevImages) => [...prevImages, ...fetchedImages]);
       }
+      setHasMoreImages(fetchedImages.length > 0);
+      setError(null);
     } catch (error) {
       setError(error);
     } finally {
@@ -34,28 +40,23 @@ function App() {
     }
   };
 
-  const handleLoadMore = async (topic) => {
-    try {
-      const newImages = await fetchMoreImages(topic);
-      setImages(prevImages => [...prevImages, ...newImages]);
-      if (newImages.length === 0) {
-        setHasMoreImages(false); 
-        
-      }
-    } catch (error) {
-      console.error('Error loading more images:', error);
-    }
-  }
+  const handleSearch = async (topic) => {
+    setQuery(topic);
+    setPage(1);
+  };
+
+  const handleLoadMore = async () => {
+    setPage((prevPage) => prevPage + 1);
+  };
 
   const openModal = (imageUrl) => {
     setSelectedImageUrl(imageUrl);
     setIsModalOpen(true);
+  };
 
-  }
-
-  const closeModal =()=> {
+  const closeModal = () => {
     setIsModalOpen(false);
-  }
+  };
 
   return (
     <div>
@@ -63,7 +64,11 @@ function App() {
       {loading && <Loader />}
       {error && <p>Error: {error.message}</p>}
       <ImageGallery images={images} openModal={openModal} />
-      <ImageModal isOpen={isModalOpen} onRequestClose={closeModal} imageUrl={selectedImageUrl} />
+      <ImageModal
+        isOpen={isModalOpen}
+        onRequestClose={closeModal}
+        imageUrl={selectedImageUrl}
+      />
       <LoadMoreBtn onLoadMore={handleLoadMore} hasMoreImages={hasMoreImages} />
     </div>
   );
