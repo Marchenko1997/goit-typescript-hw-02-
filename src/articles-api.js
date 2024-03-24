@@ -6,7 +6,7 @@ const baseUrl = "https://api.unsplash.com/";
 export async function fetchImages(
   topic,
   page,
-  perPage = 10,
+  perPage = 20,
   width = 200,
   height = 200
 ) {

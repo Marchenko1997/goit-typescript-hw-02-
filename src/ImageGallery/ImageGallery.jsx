@@ -2,26 +2,29 @@
 
 import PropTypes from 'prop-types';
 import ImageCard from '../ImageCard/ImageCard';
+import css from './ImageGallery.module.css'
 
 const ImageGallery = ({ images, openModal }) => {
   const hasImages = images.length > 0;
 
   return (
     hasImages && (
-      <ul>
+      <div  >
+      <ul className={css.gallery} >
         {images.map((image, index) => (
-          <li key={index}>
+          <li key={index} className={css.galleryitem}>
             <ImageCard
               imageUrl={image.urls.small}
               altText={image.description}
               author={image.author}
               likes={image.likes}
               description={image.description}
-              onClick={() => openModal(image.urls.regular)} // Вызываем openModal при клике на изображение
+              onClick={() => openModal(image.urls.regular, image.description)} 
             />
           </li>
         ))}
       </ul>
+      </div>
     )
   );
 };

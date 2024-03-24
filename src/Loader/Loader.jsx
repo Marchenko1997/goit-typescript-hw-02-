@@ -6,10 +6,10 @@ const Loader = () => {
   return (
     <div className={css.loaderwrapper}>
       <Audio
-        height={80}
-        width={80}
+        height={300}
+        width={300}
         radius={9}
-        color="green"
+        color="blue"
         ariaLabel="three-dots-loading"
         wrapperStyle={{}}
         wrapperClass=""

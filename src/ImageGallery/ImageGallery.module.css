@@ -1,0 +1,17 @@
+.gallery {
+    display: grid;
+    width: 100%;
+    justify-content: center;
+    align-content: center;
+    grid-template-columns: repeat(5, calc((100% - 100px) / 5));
+    grid-template-rows: repeat(calc((100% - 130px) / 3));
+    row-gap: 15px;
+    column-gap: 20px;
+
+}
+
+.galleryitem {
+  width: 100%;
+  height: 80%;
+  object-fit: cover;
+}

@@ -12,6 +12,7 @@ function App() {
   const [loading, setLoading] = useState(false);
   const [hasMoreImages, setHasMoreImages] = useState(false);
   const [selectedImageUrl, setSelectedImageUrl] = useState("");
+  const [selectedImageAlt, setSelectedImageAlt] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [query, setQuery] = useState("");
   const [page, setPage] = useState(1);
@@ -49,8 +50,9 @@ function App() {
     setPage((prevPage) => prevPage + 1);
   };
 
-  const openModal = (imageUrl) => {
+  const openModal = (imageUrl, altText) => {
     setSelectedImageUrl(imageUrl);
+    setSelectedImageAlt(altText);
     setIsModalOpen(true);
   };
 
@@ -68,6 +70,7 @@ function App() {
         isOpen={isModalOpen}
         onRequestClose={closeModal}
         imageUrl={selectedImageUrl}
+        altText={selectedImageAlt}
       />
       <LoadMoreBtn onLoadMore={handleLoadMore} hasMoreImages={hasMoreImages} />
     </div>

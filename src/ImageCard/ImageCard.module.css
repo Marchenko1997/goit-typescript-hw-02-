@@ -1,0 +1,24 @@
+.cardcontainer {
+    max-width: 100%;
+    max-height: initial;
+    object-fit: cover;
+}
+
+.card {
+    border-radius: 5px;
+    object-fit: cover;
+    height: 350px;
+    width: 100%;
+}
+
+.imagedetails {
+  background-color: #f8f8f8;
+  padding: 10px;
+  border-radius: 8px;
+  margin-top: 5px;
+}
+
+.moredetails {
+    margin: 5px 0;
+    color: #000;
+}

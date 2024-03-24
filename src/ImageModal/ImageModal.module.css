@@ -1,0 +1,11 @@
+.modalcontent {
+    background-color: black;
+}
+
+.alttext {
+    font-size: large;
+    font-weight: 500;
+    padding-left: 10px;
+    padding-bottom: 10px;
+    color: aliceblue;
+}

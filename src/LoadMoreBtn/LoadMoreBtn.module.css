@@ -1,0 +1,24 @@
+
+.containerloadmore {
+    display: flex;
+    justify-content: center; 
+    align-items: center; 
+}
+.loadmorebtn {
+    color: #fff;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 1.5;
+    letter-spacing: .04em;
+    padding: 8px 16px;
+    border-radius: 8px;
+    background: #4e75ff;
+    border: none;
+    margin-bottom: 10px;
+    transition: background-color 0.3s ease;
+}
+
+.loadmorebtn:hover,
+.loadmorebtn:focus {
+    background-color: rgba(78, 117, 255, 0.8);
+}

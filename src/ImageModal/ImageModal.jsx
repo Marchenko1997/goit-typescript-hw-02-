@@ -1,5 +1,6 @@
 import Modal from 'react-modal';
 import PropTypes from 'prop-types';
+import css from './ImageModal.module.css'
 
 const customStyles = {
     overlay: {
@@ -17,15 +18,16 @@ const customStyles = {
     }
   };
 
-const ImageModal = ({ isOpen, onRequestClose, imageUrl }) => {
+const ImageModal = ({ isOpen, onRequestClose, imageUrl, altText }) => {
   return (
     <Modal 
     isOpen={isOpen}
     onRequestClose={onRequestClose}
     ariaHideApp={false}
     style={customStyles}
-><div className="modal-content">
-        <img src={imageUrl} alt="Big" style={{ maxWidth: '100%', maxHeight: '100%' }} />
+><div className={css.modalcontent}>
+        <img src={imageUrl} alt="Big" style={{ maxWidth: '1000px', maxHeight: '800px' }} />
+        <p className={css.alttext}>{altText}</p> 
       </div> </Modal>
   )
 }
@@ -33,7 +35,8 @@ const ImageModal = ({ isOpen, onRequestClose, imageUrl }) => {
 ImageModal.propTypes = {
     isOpen: PropTypes.bool.isRequired,
     onRequestClose: PropTypes.func.isRequired, 
-    imageUrl: PropTypes.string.isRequired 
+    imageUrl: PropTypes.string.isRequired,
+    altText: PropTypes.string.isRequired 
   };
 
 export default ImageModal
