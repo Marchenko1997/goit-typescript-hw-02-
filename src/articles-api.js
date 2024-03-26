@@ -3,6 +3,10 @@ import axios from "axios";
 const accessKey = "e1Aww9Xz-HYCWbJlnhbo9mQqNyKMxYiS2j19EiIHlz0";
 const baseUrl = "https://api.unsplash.com/";
 
+const instance = axios.create({
+  baseURL: baseUrl, 
+});
+
 export async function fetchImages(
   topic,
   page,
@@ -11,7 +15,7 @@ export async function fetchImages(
   height = 200
 ) {
   try {
-    const response = await axios.get(`${baseUrl}search/photos`, {
+    const response = await instance.get("search/photos", {
       params: {
         client_id: accessKey,
         query: topic,
