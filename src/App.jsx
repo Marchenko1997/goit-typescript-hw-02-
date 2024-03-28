@@ -5,6 +5,7 @@ import Loader from "./components/Loader/Loader";
 import { fetchImages } from "./articles-api";
 import LoadMoreBtn from "./components/LoadMoreBtn/LoadMoreBtn";
 import ImageModal from "./components/ImageModal/ImageModal";
+import { animateScroll as scroll } from 'react-scroll';
 
 function App() {
   const [images, setImages] = useState([]);
@@ -48,6 +49,11 @@ function App() {
 
   const handleLoadMore = async () => {
     setPage((prevPage) => prevPage + 1);
+    scroll.scrollToBottom({
+      smooth: true,
+      duration: 500,
+      offset: Infinity 
+    });
   };
 
   const openModal = (imageUrl, altText) => {
