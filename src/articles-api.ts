@@ -1,33 +1,29 @@
-// fetchImages.ts
-import axios, { AxiosResponse } from "axios";
-import ImageData from "./ImageData";
+import axios, { AxiosResponse } from 'axios';
 
-const accessKey: string = "e1Aww9Xz-HYCWbJlnhbo9mQqNyKMxYiS2j19EiIHlz0";
-const baseUrl: string = "https://api.unsplash.com/";
+const accessKey: string = 'e1Aww9Xz-HYCWbJlnhbo9mQqNyKMxYiS2j19EiIHlz0';
+const baseUrl: string = 'https://api.unsplash.com/';
 
 const instance = axios.create({
   baseURL: baseUrl,
 });
 
-type FetchImagesResponse = {
-  data: {
-    results: Array<{
-      id: string;
-      urls: {
-        small: string;
-        regular: string;
-      };
-      user: {
-        name: string;
-        username: string;
-      };
-      likes: number;
-      alt_description?: string;
-      description?: string;
-    }>;
+export type ImageData = {
+  id: string;
+  urls: {
+    small: string;
+    regular: string;
   };
+  author: {
+    name: string;
+    username: string;
+  };
+  likes: number;
+  description: string | null;
 };
 
+export type FetchImagesResponse = {
+  results: ImageData[]; 
+};
 
 export async function fetchImages(
   topic: string,
@@ -37,19 +33,16 @@ export async function fetchImages(
   height: number = 200
 ): Promise<ImageData[]> {
   try {
-    const response: AxiosResponse<FetchImagesResponse> = await instance.get(
-      "search/photos",
-      {
-        params: {
-          client_id: accessKey,
-          query: topic,
-          page: page,
-          per_page: perPage,
-          w: width,
-          h: height,
-        },
-      }
-    );
+    const response: AxiosResponse<FetchImagesResponse> = await instance.get('search/photos', {
+      params: {
+        client_id: accessKey,
+        query: topic,
+        page: page,
+        per_page: perPage,
+        w: width,
+        h: height,
+      },
+    });
 
     const data: FetchImagesResponse = response.data;
 
@@ -60,16 +53,16 @@ export async function fetchImages(
         regular: image.urls.regular,
       },
       author: {
-        name: image.user.name,
-        username: image.user.username,
+        name: image.author.name,
+        username: image.author.username,
       },
       likes: image.likes,
-      description: image.alt_description || image.description || "",
+      description: image.description || '',
     }));
 
     return modifiedData;
   } catch (error) {
-    console.error("Error fetching images:", error);
+    console.error('Error fetching images:', error);
     throw error;
   }
 }

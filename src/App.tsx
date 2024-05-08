@@ -1,23 +1,23 @@
-import { useState, useEffect } from "react";
-import SearchBar from "./components/SearchBar/SearchBar";
-import ImageGallery from "./components/ImageGallery/ImageGallery";
-import Loader from "./components/Loader/Loader";
-import { fetchImages } from "./articles-api";
-import LoadMoreBtn from "./components/LoadMoreBtn/LoadMoreBtn";
-import ImageModal from "./components/ImageModal/ImageModal";
-import { animateScroll as scroll } from "react-scroll";
+import React, { useState, useEffect } from 'react';
+import SearchBar from './components/SearchBar/SearchBar';
+import ImageGallery from './components/ImageGallery/ImageGallery';
+import Loader from './components/Loader/Loader';
+import { fetchImages, ImageData } from './articles-api';
+import LoadMoreBtn from './components/LoadMoreBtn/LoadMoreBtn';
+import ImageModal from './components/ImageModal/ImageModal';
+import { animateScroll as scroll } from 'react-scroll';
 
 type AppProps = {};
 
 const App: React.FC<AppProps> = () => {
-  const [images, setImages] = useState<ImageData[]>([]);
+  const [images, setImages] = useState<ImageData[]>([]); 
   const [error, setError] = useState<Error | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const [hasMoreImages, setHasMoreImages] = useState<boolean>(false);
-  const [selectedImageUrl, setSelectedImageUrl] = useState<string>("");
-  const [selectedImageAlt, setSelectedImageAlt] = useState<string>("");
+  const [selectedImageUrl, setSelectedImageUrl] = useState<string>('');
+  const [selectedImageAlt, setSelectedImageAlt] = useState<string>('');
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-  const [query, setQuery] = useState<string>("");
+  const [query, setQuery] = useState<string>('');
   const [page, setPage] = useState<number>(1);
 
   useEffect(() => {
@@ -37,7 +37,7 @@ const App: React.FC<AppProps> = () => {
       }
       setHasMoreImages(fetchedImages.length > 0);
       setError(null);
-    } catch (error:unknown) {
+    } catch (error: unknown) {
       setError(error as Error);
     } finally {
       setLoading(false);
@@ -46,7 +46,7 @@ const App: React.FC<AppProps> = () => {
 
   const handleSearch = async (topic: string) => {
     setQuery(topic);
-    setPage(1);
+    setPage(1); // Reset page number when a new search is performed
   };
 
   const handleLoadMore = async () => {
