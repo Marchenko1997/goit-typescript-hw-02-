@@ -1,8 +1,21 @@
 // ImageCard.jsx
-import PropTypes from 'prop-types';
 import css from './ImageCard.module.css'
 
-const ImageCard = ({ imageUrl, altText, author, likes, description, onClick }) => {
+type Author = {
+  name: string;
+  username: string;
+}
+
+type ImageCardProps = {
+  imageUrl: string;
+  altText: string;
+  author: Author;
+  likes: number; 
+  description?: string;
+  onClick: () => void;
+}
+
+const ImageCard: React.FC<ImageCardProps> = ({ imageUrl, altText, author, likes, description, onClick }) => {
   return (
     <div onClick={onClick} className={css.cardcontainer}>
       <img src={imageUrl} alt={altText} className={css.card}/>
@@ -15,16 +28,6 @@ const ImageCard = ({ imageUrl, altText, author, likes, description, onClick }) =
   );
 };
 
-ImageCard.propTypes = {
-  imageUrl: PropTypes.string.isRequired,
-  altText: PropTypes.string.isRequired,
-  author: PropTypes.shape({
-    name: PropTypes.string.isRequired,
-    username: PropTypes.string.isRequired,
-  }).isRequired,
-  likes: PropTypes.number.isRequired,
-  description: PropTypes.string,
-  onClick: PropTypes.func.isRequired
-};
+
 
 export default ImageCard;

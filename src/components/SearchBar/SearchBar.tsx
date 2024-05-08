@@ -1,12 +1,18 @@
-import PropTypes from 'prop-types';
-import toast, { Toaster } from 'react-hot-toast';
-import css from './SearchBar.module.css'
 
-const SearchBar = ({ onSubmit }) => {
-  const handleSubmit = (evt) => {
+import toast, { Toaster } from 'react-hot-toast';
+import css from './SearchBar.module.css';
+
+type SearchBarProps = {
+  onSubmit: (topic: string) => void;
+}
+
+const SearchBar: React.FC<SearchBarProps> = ({ onSubmit }) => {
+  const handleSubmit = (evt: React.FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
-    const form = evt.target;
-    const topic = form.elements.topic.value.trim();
+    const form = evt.currentTarget;
+    const topicInput = form.elements.namedItem('topic') as HTMLInputElement | null;
+    const topic = topicInput ? topicInput.value.trim() : '';
+    
 
     if (!topic) {
       toast.error('Please enter a search term!');
@@ -35,8 +41,6 @@ const SearchBar = ({ onSubmit }) => {
   );
 };
 
-SearchBar.propTypes = {
-  onSubmit: PropTypes.func.isRequired
-};
+
 
 export default SearchBar;

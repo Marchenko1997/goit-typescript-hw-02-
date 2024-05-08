@@ -1,8 +1,9 @@
 import { Audio } from 'react-loader-spinner';
 import css from './Loader.module.css'
 
+type LoaderProps = {};
 
-const Loader = () => {
+const Loader: React.FC<LoaderProps>  = () => {
   return (
     <div className={css.loaderwrapper}>
       <Audio

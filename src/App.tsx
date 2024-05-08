@@ -5,18 +5,20 @@ import Loader from "./components/Loader/Loader";
 import { fetchImages } from "./articles-api";
 import LoadMoreBtn from "./components/LoadMoreBtn/LoadMoreBtn";
 import ImageModal from "./components/ImageModal/ImageModal";
-import { animateScroll as scroll } from 'react-scroll';
+import { animateScroll as scroll } from "react-scroll";
 
-function App() {
-  const [images, setImages] = useState([]);
-  const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(false);
-  const [hasMoreImages, setHasMoreImages] = useState(false);
-  const [selectedImageUrl, setSelectedImageUrl] = useState("");
-  const [selectedImageAlt, setSelectedImageAlt] = useState("");
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [query, setQuery] = useState("");
-  const [page, setPage] = useState(1);
+type AppProps = {};
+
+const App: React.FC<AppProps> = () => {
+  const [images, setImages] = useState<ImageData[]>([]);
+  const [error, setError] = useState<Error | null>(null);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [hasMoreImages, setHasMoreImages] = useState<boolean>(false);
+  const [selectedImageUrl, setSelectedImageUrl] = useState<string>("");
+  const [selectedImageAlt, setSelectedImageAlt] = useState<string>("");
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [query, setQuery] = useState<string>("");
+  const [page, setPage] = useState<number>(1);
 
   useEffect(() => {
     if (query) {
@@ -24,7 +26,7 @@ function App() {
     }
   }, [query, page]);
 
-  const fetchImagesData = async (topic, pageNumber) => {
+  const fetchImagesData = async (topic: string, pageNumber: number) => {
     try {
       setLoading(true);
       const fetchedImages = await fetchImages(topic, pageNumber);
@@ -35,14 +37,14 @@ function App() {
       }
       setHasMoreImages(fetchedImages.length > 0);
       setError(null);
-    } catch (error) {
-      setError(error);
+    } catch (error:unknown) {
+      setError(error as Error);
     } finally {
       setLoading(false);
     }
   };
 
-  const handleSearch = async (topic) => {
+  const handleSearch = async (topic: string) => {
     setQuery(topic);
     setPage(1);
   };
@@ -52,11 +54,11 @@ function App() {
     scroll.scrollToBottom({
       smooth: true,
       duration: 500,
-      offset: Infinity 
+      offset: Infinity,
     });
   };
 
-  const openModal = (imageUrl, altText) => {
+  const openModal = (imageUrl: string, altText: string) => {
     setSelectedImageUrl(imageUrl);
     setSelectedImageAlt(altText);
     setIsModalOpen(true);
@@ -81,6 +83,6 @@ function App() {
       <LoadMoreBtn onLoadMore={handleLoadMore} hasMoreImages={hasMoreImages} />
     </div>
   );
-}
+};
 
 export default App;

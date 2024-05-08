@@ -1,10 +1,30 @@
 // ImageGallery.jsx
 
-import PropTypes from 'prop-types';
 import ImageCard from '../ImageCard/ImageCard';
 import css from './ImageGallery.module.css'
 
-const ImageGallery = ({ images, openModal }) => {
+type Image = {
+  id: string,
+  urls: {
+    small: string,
+    regular: string
+  };
+  author: {
+    name: string,
+    username: string
+  };
+  likes: number;
+  description?: string;
+}
+
+type ImageGalleryProps = {
+  images: Image[];
+  openModal: (url: string, description?: string) => void;
+}
+
+
+
+const ImageGallery: React.FC<ImageGalleryProps> = ({ images, openModal }) => {
   const hasImages = images.length > 0;
 
   return (
@@ -15,7 +35,7 @@ const ImageGallery = ({ images, openModal }) => {
           <li key={index} className={css.galleryitem}>
             <ImageCard
               imageUrl={image.urls.small}
-              altText={image.description}
+              altText={image.description || ''}
               author={image.author}
               likes={image.likes}
               description={image.description}
@@ -27,25 +47,6 @@ const ImageGallery = ({ images, openModal }) => {
       </div>
     )
   );
-};
-
-ImageGallery.propTypes = {
-  images: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.string.isRequired,
-      urls: PropTypes.shape({
-        small: PropTypes.string.isRequired,
-        regular: PropTypes.string.isRequired
-      }).isRequired,
-      author: PropTypes.shape({
-        name: PropTypes.string.isRequired,
-        username: PropTypes.string.isRequired,
-      }),
-      likes: PropTypes.number.isRequired,
-      description: PropTypes.string
-    })
-  ).isRequired,
-  openModal: PropTypes.func.isRequired // Проп валидация для openModal
 };
 
 export default ImageGallery;

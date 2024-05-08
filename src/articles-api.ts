@@ -1,34 +1,59 @@
-import axios from "axios";
+// fetchImages.ts
+import axios, { AxiosResponse } from "axios";
+import ImageData from "./ImageData";
 
-const accessKey = "e1Aww9Xz-HYCWbJlnhbo9mQqNyKMxYiS2j19EiIHlz0";
-const baseUrl = "https://api.unsplash.com/";
+const accessKey: string = "e1Aww9Xz-HYCWbJlnhbo9mQqNyKMxYiS2j19EiIHlz0";
+const baseUrl: string = "https://api.unsplash.com/";
 
 const instance = axios.create({
-  baseURL: baseUrl, 
+  baseURL: baseUrl,
 });
 
+type FetchImagesResponse = {
+  data: {
+    results: Array<{
+      id: string;
+      urls: {
+        small: string;
+        regular: string;
+      };
+      user: {
+        name: string;
+        username: string;
+      };
+      likes: number;
+      alt_description?: string;
+      description?: string;
+    }>;
+  };
+};
+
+
 export async function fetchImages(
-  topic,
-  page,
-  perPage = 20,
-  width = 200,
-  height = 200
-) {
+  topic: string,
+  page: number,
+  perPage: number = 20,
+  width: number = 200,
+  height: number = 200
+): Promise<ImageData[]> {
   try {
-    const response = await instance.get("search/photos", {
-      params: {
-        client_id: accessKey,
-        query: topic,
-        page: page,
-        per_page: perPage,
-        w: width,
-        h: height,
-      },
-    });
+    const response: AxiosResponse<FetchImagesResponse> = await instance.get(
+      "search/photos",
+      {
+        params: {
+          client_id: accessKey,
+          query: topic,
+          page: page,
+          per_page: perPage,
+          w: width,
+          h: height,
+        },
+      }
+    );
 
-    const data = response.data;
+    const data: FetchImagesResponse = response.data;
 
-    const modifiedData = data.results.map((image) => ({
+    const modifiedData: ImageData[] = data.results.map((image) => ({
       id: image.id,
       urls: {
         small: image.urls.small,
@@ -39,7 +64,7 @@ export async function fetchImages(
         username: image.user.username,
       },
       likes: image.likes,
-      description: image.alt_description || image.description,
+      description: image.alt_description || image.description || "",
     }));
 
     return modifiedData;

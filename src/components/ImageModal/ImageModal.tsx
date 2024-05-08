@@ -1,6 +1,12 @@
 import Modal from 'react-modal';
-import PropTypes from 'prop-types';
-import css from './ImageModal.module.css'
+import css from './ImageModal.module.css';
+
+type ImageModalProps = {
+  isOpen: boolean;
+  onRequestClose: () => void;
+  imageUrl: string;
+  altText: string;
+}
 
 const customStyles = {
     overlay: {
@@ -18,7 +24,7 @@ const customStyles = {
     }
   };
 
-const ImageModal = ({ isOpen, onRequestClose, imageUrl, altText }) => {
+const ImageModal: React.FC<ImageModalProps>  = ({ isOpen, onRequestClose, imageUrl, altText }) => {
   return (
     <Modal 
     isOpen={isOpen}
@@ -32,11 +38,5 @@ const ImageModal = ({ isOpen, onRequestClose, imageUrl, altText }) => {
   )
 }
 
-ImageModal.propTypes = {
-    isOpen: PropTypes.bool.isRequired,
-    onRequestClose: PropTypes.func.isRequired, 
-    imageUrl: PropTypes.string.isRequired,
-    altText: PropTypes.string.isRequired 
-  };
 
 export default ImageModal

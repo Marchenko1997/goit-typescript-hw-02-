@@ -1,8 +1,13 @@
 
-import PropTypes from 'prop-types';
-import css from './LoadMoreBtn.module.css'
 
-const LoadMoreBtn = ({onLoadMore, hasMoreImages}) => {
+import css from './LoadMoreBtn.module.css';
+
+type LoadMoreBtnProps = {
+  onLoadMore: () => void;
+  hasMoreImages: boolean;
+}
+
+const LoadMoreBtn: React.FC<LoadMoreBtnProps> = ({onLoadMore, hasMoreImages}) => {
   return (
     <div className={css.containerloadmore}>  {hasMoreImages && (<button onClick ={onLoadMore} className={css.loadmorebtn}>Load More</button>)}
 
@@ -10,9 +15,6 @@ const LoadMoreBtn = ({onLoadMore, hasMoreImages}) => {
   )
 }
 
-LoadMoreBtn.propTypes = {
-    onLoadMore: PropTypes.func.isRequired,
-    hasMoreImages: PropTypes.bool.isRequired,
-  };
+
 
 export default LoadMoreBtn
