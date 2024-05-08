@@ -9,7 +9,7 @@ const Loader: React.FC<LoaderProps>  = () => {
       <Audio
         height={300}
         width={300}
-        radius={9}
+        // radius={9}
         color="blue"
         ariaLabel="three-dots-loading"
         wrapperStyle={{}}
