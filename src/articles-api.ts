@@ -18,7 +18,7 @@ export type ImageData = {
     username: string;
   };
   likes: number;
-  description: string | null;
+  description: string;
 };
 
 export type FetchImagesResponse = {
@@ -52,13 +52,14 @@ export async function fetchImages(
         small: image.urls.small,
         regular: image.urls.regular,
       },
-      author: {
-        name: image.author.name,
-        username: image.author.username,
-      },
+      author: image.author ? { 
+        name: image.author.name || '', 
+        username: image.author.username || '', 
+      } : { name: '', username: '' },
       likes: image.likes,
       description: image.description || '',
     }));
+    
 
     return modifiedData;
   } catch (error) {

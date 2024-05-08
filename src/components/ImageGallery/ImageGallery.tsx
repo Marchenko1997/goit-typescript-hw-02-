@@ -13,12 +13,11 @@ export type Image = {
     username: string;
   };
   likes: number;
-  description?: string;
+  description: string;
 };
-
 type ImageGalleryProps = {
-  images: Image[]; 
-  openModal: (url: string, description?: string) => void;
+  images: Image[];
+  openModal: (url: string, description: string) => void;
 };
 
 const ImageGallery: React.FC<ImageGalleryProps> = ({ images, openModal }) => {
