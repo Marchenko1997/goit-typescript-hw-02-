@@ -46,7 +46,7 @@ const App: React.FC<AppProps> = () => {
 
   const handleSearch = async (topic: string) => {
     setQuery(topic);
-    setPage(1); // Reset page number when a new search is performed
+    setPage(1); 
   };
 
   const handleLoadMore = async () => {
